@@ -4,7 +4,6 @@ use Livewire\Attributes\Validate;
 use Livewire\Volt\Component;
 
 new class extends Component {
-    //
     #[Validate('required|string|min:5')]
     public $noteTitle;
 
@@ -20,6 +19,7 @@ new class extends Component {
     public function submit()
     {
         $this->validate();
+
       auth()->user()->notes()->create([
           'title'=>$this->noteTitle,
           'body'=>$this->noteBody,

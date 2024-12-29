@@ -9,7 +9,8 @@ new
 #[Layout('layouts.app')]
 class extends Component {
     //
-
+    public $alertMessage;
+    public $alertType;
     public Note $note;
 
     #[Validate('required|string|min:5')]
@@ -59,7 +60,6 @@ class extends Component {
             {{ __('Edit note') }}
         </h2>
     </x-slot>
-
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 

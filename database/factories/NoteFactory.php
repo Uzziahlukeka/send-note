@@ -21,11 +21,11 @@ class NoteFactory extends Factory
         return [
             //
             'id'=> Str::uuid()->toString(),
-            'user_id'=> User::factory(),
+            'user_id'=> 21,
             'title' => $this->faker->sentence(),
             'body' => $this->faker->paragraph(),
             'recipient' => $this->faker->email(),
-            'send_date'=>$this->faker->date(),
+            'send_date' => $this->faker->dateTimeBetween('now', '+30 days')->format('Y-m-d'),
             'is_published' => $this->faker->boolean(),
             'heart_count' => $this->faker->randomDigit(),
         ];
