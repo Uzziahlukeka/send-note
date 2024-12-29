@@ -24,6 +24,7 @@ class NoteFactory extends Factory
             'user_id'=> User::factory(),
             'title' => $this->faker->sentence(),
             'body' => $this->faker->paragraph(),
+            'recipient' => $this->faker->email(),
             'send_date'=>$this->faker->date(),
             'is_published' => $this->faker->boolean(),
             'heart_count' => $this->faker->randomDigit(),
