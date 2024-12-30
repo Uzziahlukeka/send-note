@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Mail\NewNote;
 use App\Models\Note;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
@@ -31,12 +32,8 @@ class SendEmail implements ShouldQueue
         $noteRecipient = $this->note->recipient;
         $noteUserName = $this->note->user->name;
 
-        $emailContent = "Hello, you have received a new note. View it here: $noteUrl";
+        $emailContent = "Hello, you have received a new note. View it here: ";
 
-        Mail::raw($emailContent, function ($message) use ($noteSender, $noteRecipient, $noteUserName) {
-            $message->from($noteSender, 'The Sendnotes App')
-                ->to($noteRecipient)
-                ->subject("You have a new note from $noteUserName");
-        });
+        Mail::to($noteRecipient)->send(new NewNote($emailContent, $noteSender, $noteUserName , $noteUrl));
     }
 }
