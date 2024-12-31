@@ -16,6 +16,12 @@ new class extends Component {
     #[Validate('required|date')]
     public $noteSendDate;
 
+    #[Validate('required|bool')]
+    public $noteIsPublished = false;
+
+    public $alertMessage = null;
+    public $alertType = null;
+
     public function submit()
     {
         $this->validate();
@@ -25,8 +31,11 @@ new class extends Component {
           'body'=>$this->noteBody,
           'recipient'=>$this->noteRecipient,
           'send_date'=>$this->noteSendDate,
-          'is_published'=>true
+          'is_published'=>$this->noteIsPublished,
       ]);
+
+      $this->alertMessage = 'Note has been successfully scheduled!';
+      $this->alertType = 'success';
 
       $this->reset();
       redirect(route('notes.index'));
@@ -35,16 +44,22 @@ new class extends Component {
 }; ?>
 
 <div>
-    <forn wire:submit="submit" class="space-y-4">
+
+    @if ($alertMessage)
+        <x-alert :title="$alertMessage" :warning="$alertType === 'error'" :positive="$alertType === 'success'" rounded="base" />
+    @endif
+
+    <form wire:submit="submit" class="space-y-4">
         <x-input wire:model="noteTitle" label="Note Title" placeholder="It's been a great day"/>
         <x-textarea wire:model="noteBody" label="Your Note"
                     placeholder="winter is not wintering this year"></x-textarea>
         <x-input icon="user" wire:model="noteRecipient" type="email" label="Recipient"
                  placeholder="contact@uzziahlukeka.tech"/>
         <x-input icon="calendar" wire:model="noteSendDate" type="date" label="Date"/>
+        <x-checkbox wire:model="noteIsPublished" label="Published" />
         <x-button type="submit" positive right-icon="calendar" spinner class="mt-4">
             schedule note
         </x-button>
         <x-errors />
-    </forn>
+    </form>
 </div>

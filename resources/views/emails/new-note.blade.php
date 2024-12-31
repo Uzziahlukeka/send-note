@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,10 +10,16 @@
 </head>
 <body class="bg-gray-100 text-gray-800 font-sans leading-relaxed">
 
-<div class="max-w-3xl mx-auto bg-white p-8 shadow-lg rounded-lg mt-10">
+<div class="flex justify-center mt-8">
+    <a href="/" wire:navigate>
+        <x-application-logo class="w-12 h-12 fill-current text-gray-500" />
+    </a>
+</div>
+
+<div class="max-w-3xl mx-auto bg-white p-8 shadow-lg rounded-lg mt-5">
     <!-- Header Section -->
     <div class="text-center mb-6">
-        <h1 class="text-3xl font-semibold text-gray-900">You have a new note from {{ $noteUserName }}</h1>
+        <h1 class="text-xl font-semibold text-gray-900">You have a new note from {{ $noteUserName }}</h1>
     </div>
 
     <!-- Body Section -->
@@ -23,15 +29,21 @@
 
     <!-- Button Section -->
     <div class="text-center">
-        <a href="{{ $url }}" class="inline-block bg-blue-600 text-white text-xl font-medium py-3 px-6 rounded-md hover:bg-blue-700 transition duration-300">
+        <a href="{{ $url }}"
+           class="block bg-green-500 hover:bg-green-600 text-white text-center font-bold py-2 px-4 rounded-lg mt-6"
+           style="text-decoration: none;">
             view the note
         </a>
     </div>
+    <p class="leading-normal mt-4">
+        Thanks,<br>
+        Send Note App ,
+    </p>
 </div>
 
 <!-- Footer Section -->
-<div class="text-center mt-8 text-sm text-gray-600">
-    <p>If you did not request this, please ignore this email.</p>
+<div class="bg-gray-100 text-gray-500 text-sm text-center py-4 mt-6">
+    &copy; {{ date('Y') }} Send Notes App. All rights reserved.
 </div>
 
 </body>
