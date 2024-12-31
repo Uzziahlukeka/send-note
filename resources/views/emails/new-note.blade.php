@@ -11,9 +11,7 @@
 <body class="bg-gray-100 text-gray-800 font-sans leading-relaxed">
 
 <div class="flex justify-center mt-8">
-    <a href="/" wire:navigate>
         <x-application-logo class="w-12 h-12 fill-current text-gray-500" />
-    </a>
 </div>
 
 <div class="max-w-3xl mx-auto bg-white p-8 shadow-lg rounded-lg mt-5">
