@@ -37,5 +37,19 @@ Route::get('/notes/{note}',function (Note $note){
 
 //Route::view('/notes/{note}', 'notes.show');
 
+Route::view('/blogs', 'Blog.index')
+    ->name('blogs');
+Route::view('/blogs/create', 'Blog.create')
+    ->name('blogs.create');
+Route::view('/blogs/{blog}', 'Blog.show')
+    ->name('blogs.show');
+
+Route::view('/comments', 'Comments.index')
+    ->name('comments');
+Route::view('/comment/create', 'Comments.create')
+    ->name('comment.create');
+Route::view('/comment/{blog}', 'Comments.show')
+    ->name('comment.show');
+
 
 require __DIR__.'/auth.php';

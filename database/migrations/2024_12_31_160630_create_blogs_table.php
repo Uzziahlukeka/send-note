@@ -17,7 +17,9 @@ return new class extends Migration
             $table->text('body');
             $table->string('photo')->nullable();
             $table->string('author');
+            $table->string('categories');
             $table->integer('likes')->default(0);
+            $table->boolean('posted')->default(false);
             $table->timestamps();
         });
     }
