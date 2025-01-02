@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Blog;
 use App\Models\Note;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
@@ -41,8 +42,12 @@ Route::view('/blogs', 'Blog.index')
     ->name('blogs');
 Route::view('/blogs/create', 'Blog.create')
     ->name('blogs.create');
-Route::view('/blogs/{blog}', 'Blog.show')
-    ->name('blogs.show');
+//Route::view('/blogs/{blog}', 'Blog.show')
+//    ->name('blogs.show');
+
+Route::get('/blogs/{blog}', function (Blog $blog) {
+    return view('Blog.show',['blogId' => $blog->id]);
+})->name('blogs.show');
 
 Route::view('/comments', 'Comments.index')
     ->name('comments');

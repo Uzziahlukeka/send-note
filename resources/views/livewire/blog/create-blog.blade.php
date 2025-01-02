@@ -1,6 +1,8 @@
 <?php
 
 use App\Enums\BlogCategoryEnum;
+use App\Models\Blog;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Validate;
 use Livewire\Volt\Component;
 use Livewire\WithFileUploads;
@@ -10,9 +12,8 @@ new class extends Component {
 
     #[Validate('required|string|min:6')]
     public $titleBlog;
-
     public $bodyBlog;
-    public $authorBlog;
+    private $authorBlog;
     public $categoryBlog;
     public $photoBlog;
     public $postBlog = false;
@@ -21,7 +22,6 @@ new class extends Component {
     {
         return [
             'bodyBlog' => 'required|string|min:20',
-            'authorBlog' => 'required|string',
             'categoryBlog' => 'required|string|in:' . implode(',', BlogCategoryEnum::options()),
             'photoBlog' => 'required|file|max:5120',
             'postBlog' => 'required|bool',
@@ -31,6 +31,18 @@ new class extends Component {
     public function submit()
     {
         $this->validate();
+        $this->authorBlog = Auth::user()->name;
+        $photoPath = $this->photoBlog->store('Photos/Blogs','public');
+        Blog::create([
+            'title' => $this->titleBlog,
+            'body' => $this->bodyBlog,
+            'author' => $this->authorBlog,
+            'categories'=>$this->categoryBlog,
+            'photo' => $photoPath,
+            'posted' => $this->postBlog,
+        ]);
+
+        $this->reset();
 
         // Handle blog submission logic
     }
@@ -39,7 +51,7 @@ new class extends Component {
 ?>
 
 <div>
-    <form class="space-y-6" wire:submit.prevent="submit">
+    <form wire:submit="submit" class="space-y-6">
 
         <x-input type="file"
                  wire:model="photoBlog"
@@ -61,7 +73,7 @@ new class extends Component {
                   description="The topic area"
         />
 
-        <x-toggle id="label" label="Post it" name="toggle"/>
+        <x-toggle wire:model="postBlog" id="label" label="Post it" name="toggle"/>
         <x-button type="submit" positive right-icon="check" spinner class="mt-4">
             Save the blog
         </x-button>

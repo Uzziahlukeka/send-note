@@ -4,4 +4,9 @@
             {{ __('Blog detail') }}
         </h2>
     </x-slot>
+
+    <div class="items-center flex justify-center">
+        <livewire:blog.show-blog />
+    </div>
+
 </x-app-layout>
