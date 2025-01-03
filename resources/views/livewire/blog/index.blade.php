@@ -27,7 +27,7 @@ new class extends Component {
                         <img src="{{ asset('storage/' . $blog->photo) }}" alt="Blog Photo" class="w-full h-48 object-cover rounded-t-lg">
                         <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                             <h1 class="text-white font-bold text-2xl">
-                                <a href="{{ route('blogs.show',$blog->id) }}" class="hover:bg-gray-700">
+                                <a href="{{ route('blogs.show',$blog->id) }}" wire:navigate class="hover:bg-gray-700">
                                     See more ...
                                 </a>
                             </h1>

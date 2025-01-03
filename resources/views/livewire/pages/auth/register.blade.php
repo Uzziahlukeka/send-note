@@ -12,6 +12,7 @@ new #[Layout('layouts.guest')] class extends Component
 {
     public string $name = '';
     public string $email = '';
+    public string $pseudo = '';
     public string $password = '';
     public string $password_confirmation = '';
 
@@ -22,6 +23,7 @@ new #[Layout('layouts.guest')] class extends Component
     {
         $validated = $this->validate([
             'name' => ['required', 'string', 'max:255'],
+            'pseudo'=>['required','string'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
         ]);
@@ -43,6 +45,13 @@ new #[Layout('layouts.guest')] class extends Component
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input wire:model="name" id="name" class="block mt-1 w-full" type="text" name="name" required autofocus autocomplete="name" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
+        </div>
+
+        <!-- pseudo -->
+        <div>
+            <x-input-label for="Pseudo" :value="__('pseudo')" />
+            <x-text-input wire:model="name" id="pseudo" class="block mt-1 w-full" type="text" name="pseudo" required autofocus autocomplete="pseudo" />
+            <x-input-error :messages="$errors->get('pseudo')" class="mt-2" />
         </div>
 
         <!-- Email Address -->
