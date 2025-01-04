@@ -38,6 +38,7 @@ new class extends Component {
       $this->alertType = 'success';
 
       $this->reset();
+      $this->js("alert('Notes saved')");
       redirect(route('notes.index'));
     }
 

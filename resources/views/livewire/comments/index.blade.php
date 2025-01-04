@@ -28,6 +28,8 @@
             $this->authorize('delete', $comment);
             $comment->delete();
             $this->dispatch('deleteComment');
+
+            $this->js("alert('comment deleted')");
         }
     };
 

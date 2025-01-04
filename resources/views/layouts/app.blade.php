@@ -31,6 +31,26 @@
 
             <!-- Page Content -->
             <main>
+                <div x-data="{ showAlert: true }"
+                     x-init="setTimeout(() => showAlert = false, 3000)"
+                     x-show="showAlert"
+                     class="fixed top-0 right-0 mt-4 mr-4 py-12 justify-end z-50">
+                    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                        <div>
+                            @if (session()->has('alert'))
+                                <div class="alert alert-success flex">
+                                    <x-alert
+                                        title="{{ session('alert.message') }}"
+                                        :positive="session('alert.type')"
+                                        class="{{ session('alert.class') }}"
+                                        rounded="lg"
+                                        solid
+                                    />
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
                 {{ $slot }}
             </main>
         </div>

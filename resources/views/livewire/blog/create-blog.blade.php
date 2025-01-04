@@ -30,21 +30,39 @@ new class extends Component {
 
     public function submit()
     {
-        $this->validate();
-        $this->authorBlog = Auth::user()->name;
-        $photoPath = $this->photoBlog->store('Photos/Blogs','public');
-        Blog::create([
-            'title' => $this->titleBlog,
-            'body' => $this->bodyBlog,
-            'author' => $this->authorBlog,
-            'categories'=>$this->categoryBlog,
-            'photo' => $photoPath,
-            'posted' => $this->postBlog,
-        ]);
+        try {
+            $this->validate();
+            $this->authorBlog = Auth::user()->name;
 
-        $this->reset();
+            $photoPath = $this->photoBlog->store('Photos/Blogs', 'public');
 
-        // Handle blog submission logic
+            Blog::create([
+                'title' => $this->titleBlog,
+                'body' => $this->bodyBlog,
+                'author' => $this->authorBlog,
+                'categories' => $this->categoryBlog,
+                'photo' => $photoPath,
+                'posted' => $this->postBlog,
+            ]);
+            session()->flash('alert', [
+                'message' => 'Blog successfully created.',
+                'class' => 'alert-success',
+                'status' => 'created',
+                'type' => 'positive',
+            ]);
+            $this->js("alert('Post saved!')");
+            redirect(route('blogs'));
+
+        } catch (\Exception $e) {
+            session()->flash('alert', [
+                'message' => 'An error occurred while creating the blog: ' . $e->getMessage(),
+                'class' => 'alert-danger',
+                'status' => 'error',
+                'type' => 'negative',
+            ]);
+            \Log::error('Error creating blog post: ' . $e->getMessage());
+            $this->js("alert('Failed to save the post! Please try again.')");
+        }
     }
 };
 

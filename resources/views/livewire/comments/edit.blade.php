@@ -28,6 +28,8 @@ new #[Layout('layouts.app')] class extends Component {
         ]);
         $this->dispatch('commentSaved');
         $this->redirect(route('blogs.show',$this->blogId));
+
+        $this->js("alert('comment saved')");
     }
 
     public function cancelEditing()

@@ -14,9 +14,11 @@ new #[Layout('layouts.app')] class extends Component {
     public $titleBlog;
     public $bodyBlog;
     public $categoryBlog;
-    public $photoBlog; // For file input
-    public $currentPhoto; // For displaying the current photo
+    public $photoBlog;
+    public $currentPhoto;
     public $postBlog = false;
+
+    public Blog $blogs;
 
     public function rules()
     {
@@ -31,6 +33,8 @@ new #[Layout('layouts.app')] class extends Component {
     public function mount(Blog $blog)
     {
         $this->fill($blog);
+        $this->authorize('update',$blog);
+        $this->blogs = $blog ;
         $this->currentPhoto = $blog->photo; // Store the current photo path
         $this->titleBlog = $blog->title;
         $this->bodyBlog = $blog->body;
@@ -40,28 +44,47 @@ new #[Layout('layouts.app')] class extends Component {
 
     public function save()
     {
-        $this->validate();
+        try {
+            $this->validate();
+            if ($this->photoBlog && $this->currentPhoto) {
+                // Delete the old photo from storage
+                \Storage::disk('public')->delete($this->currentPhoto);
+            }
 
-        if ($this->photoBlog && $this->currentPhoto) {
-            // Delete the old photo from storage
-            \Storage::disk('public')->delete($this->currentPhoto);
+            $photoPath = $this->photoBlog
+                ? $this->photoBlog->store('Photos/Blogs', 'public')
+                : $this->currentPhoto;
+
+            $this->blogs->update([
+                'title' => $this->titleBlog,
+                'body' => $this->bodyBlog,
+                'categories' => $this->categoryBlog,
+                'photo' => $photoPath,
+                'posted' => $this->postBlog,
+            ]);
+            $this->currentPhoto = $photoPath;
+            $this->dispatch('blogUpdated');
+            session()->flash('alert', [
+                'message' => 'Post successfully updated.',
+                'class' => 'alert-success',
+                'status' => 'updated',
+                'type' => 'positive',
+            ]);
+            $this->js("alert('Post saved!')");
+            redirect(route('blogs.show', $this->blogs->id));
+
+        } catch (\Exception $e) {
+            session()->flash('alert', [
+                'message' => 'An error occurred while updating the blog: ' . $e->getMessage(),
+                'class' => 'alert-danger',
+                'status' => 'error',
+                'type' => 'negative',
+            ]);
+            \Log::error('Error updating blog post: ' . $e->getMessage());
+            $this->js("alert('Failed to save the post! Please try again.')");
         }
 
-        $photoPath = $this->photoBlog
-            ? $this->photoBlog->store('Photos/Blogs', 'public')
-            : $this->currentPhoto; // Retain the existing photo if no new one is uploaded
-
-        Blog::update([
-            'title' => $this->titleBlog,
-            'body' => $this->bodyBlog,
-            'categories' => $this->categoryBlog,
-            'photo' => $photoPath,
-            'posted' => $this->postBlog,
-        ]);
-
-        $this->currentPhoto = $photoPath;
     }
-};
 ?>
 
 <div>
@@ -99,6 +122,7 @@ new #[Layout('layouts.app')] class extends Component {
                 <x-textarea wire:model="bodyBlog"
                             label="Description"
                             placeholder="This is the content of your blog"
+                            rows="12"
                             description="Explain your title">
                 </x-textarea>
 
