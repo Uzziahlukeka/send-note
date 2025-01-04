@@ -56,24 +56,24 @@ new class extends Component {
         <div class="container mx-auto p-8 bg-white shadow-lg rounded-lg">
             @canany(['update','delete'],$blog)
                 <div class="flex justify-end mb-3 space-x-2">
-                <x-button
-                    href="{{ route('blog.edit',$blog->id) }}"
-                    wire:navigate
-                    label="Edit"
-                    right-icon="pencil"
-                    flat
-                    interaction="solid"
-                    class="bg-blue-500 text-white hover:bg-blue-600"
-                />
-                <x-button
-                    type="button"
-                    label="delete"
-                    wire:click="deleteBlog"
-                    right-icon="trash"
-                    outline hover="warning" focus:solid.gray
-                    wire:confirm="Are you sure you want to delete this blog?"
-                />
-            </div>
+                    <x-button
+                        href="{{ route('blog.edit',$blog->id) }}"
+                        wire:navigate
+                        label="Edit"
+                        right-icon="pencil"
+                        flat
+                        interaction="solid"
+                        class="bg-blue-500 text-white hover:bg-blue-600"
+                    />
+                    <x-button
+                        type="button"
+                        label="delete"
+                        wire:click="deleteBlog"
+                        right-icon="trash"
+                        outline hover="warning" focus:solid.gray
+                        wire:confirm="Are you sure you want to delete this blog?"
+                    />
+                </div>
             @endcanany
             <!-- Image Slot -->
             <div class="w-full h-64 bg-gray-200 rounded-lg overflow-hidden mb-6">
@@ -97,13 +97,17 @@ new class extends Component {
                     {{ $blog->body }}
                 </p>
             </div>
+
+            <div>
+                <livewire:blog.heart :blog="$blog" />
+            </div>
+
+                <div class="mt-4">
+                    <livewire:comments.create :blogId="$blog->id" />
+                </div>
             <div>
                 <livewire:comments.index :blogId="$blog->id" />
             </div>
-            <div class="mt-4">
-                <livewire:comments.create :blogId="$blog->id" />
-            </div>
-
         </div>
     </x-card>
 

@@ -39,13 +39,32 @@
                         <div>
                             @if (session()->has('alert'))
                                 <div class="alert alert-success flex">
-                                    <x-alert
-                                        title="{{ session('alert.message') }}"
-                                        :positive="session('alert.type')"
-                                        class="{{ session('alert.class') }}"
-                                        rounded="lg"
-                                        solid
-                                    />
+                                    @if(session('alert.type') === 'positive')
+                                        <x-alert
+                                            title="{{ session('alert.message') }}"
+                                            positive
+                                            class="{{ session('alert.class') }}"
+                                            rounded="lg"
+                                            solid
+                                        />
+
+                                    @elseif(session('alert.type') === 'error')
+                                        <x-alert
+                                            title="{{ session('alert.message') }}"
+                                            error
+                                            class="{{ session('alert.class') }}"
+                                            rounded="lg"
+                                            solid
+                                        />
+                                    @elseif(session('alert.type') === 'warning')
+                                        <x-alert
+                                            title="{{ session('alert.message') }}"
+                                            warning
+                                            class="{{ session('alert.class') }}"
+                                            rounded="lg"
+                                            solid
+                                        />
+                                    @endif
                                 </div>
                             @endif
                         </div>

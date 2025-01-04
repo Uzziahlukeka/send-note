@@ -33,8 +33,8 @@ new #[Layout('layouts.app')] class extends Component {
     public function mount(Blog $blog)
     {
         $this->fill($blog);
-        $this->authorize('update',$blog);
-        $this->blogs = $blog ;
+        $this->authorize('update', $blog);
+        $this->blogs = $blog;
         $this->currentPhoto = $blog->photo; // Store the current photo path
         $this->titleBlog = $blog->title;
         $this->bodyBlog = $blog->body;
@@ -85,6 +85,7 @@ new #[Layout('layouts.app')] class extends Component {
         }
 
     }
+};
 ?>
 
 <div>

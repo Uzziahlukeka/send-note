@@ -14,16 +14,16 @@
     </head>
     <body class="antialiased font-sans">
 
-        <div>
-            @if (Route::has('login'))
-                <livewire:welcome.navigation />
-            @endif
-        </div>
        <div class="relative min-h-screen bg-gray-100 bg-center sm:flex sm:justify-center sm:items-center bg-dots-darker dark:bg-dots-lighter dark:bg-gray-900">
            <div class="flex justify-center">
                <div class="flex flex-col items-center justify-center p-6 mx-auto space-y-4 text-center max-w-7xl lg:p-8">
                    <x-application-logo class="w-24 h-24 fill-current text-primary" />
-                   <x-button primary xl href="{{ route('register') }}">Get Started</x-button>
+                   <div class="space-y-1 rounded">
+                       @if (Route::has('login'))
+                           <livewire:welcome.navigation />
+                       @endif
+                   </div>
+
                </div>
            </div>
        </div>
