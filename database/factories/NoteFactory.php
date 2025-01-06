@@ -21,7 +21,7 @@ class NoteFactory extends Factory
         return [
             //
             'id'=> Str::uuid()->toString(),
-            'user_id'=> 22,
+            'user_id'=>User::factory(),
             'title' => $this->faker->sentence(),
             'body' => $this->faker->paragraph(),
             'recipient' => $this->faker->email(),

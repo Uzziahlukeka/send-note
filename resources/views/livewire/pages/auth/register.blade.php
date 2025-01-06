@@ -50,7 +50,7 @@ new #[Layout('layouts.guest')] class extends Component
         <!-- pseudo -->
         <div>
             <x-input-label for="Pseudo" :value="__('pseudo')" />
-            <x-text-input wire:model="name" id="pseudo" class="block mt-1 w-full" type="text" name="pseudo" required autofocus autocomplete="pseudo" />
+            <x-text-input wire:model="pseudo" id="pseudo" class="block mt-1 w-full" type="text" name="pseudo" required autofocus autocomplete="pseudo" />
             <x-input-error :messages="$errors->get('pseudo')" class="mt-2" />
         </div>
 

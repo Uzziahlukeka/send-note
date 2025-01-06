@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\BlogCategoryEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,10 +20,12 @@ class BlogFactory extends Factory
         return [
             //
             'title' => $this->faker->sentence(),
-            'body' => $this->faker->paragraph(),
+            'body' => $this->faker->paragraph(15, true),
             'author'=>$this->faker->name(),
+            'categories'=>$this->faker->randomElement(BlogCategoryEnum::options()),
             'likes'=>$this->faker->randomDigit(),
             'photo'=>$this->faker->imageUrl(),
+            'posted'=>$this->faker->boolean(),
         ];
     }
 }

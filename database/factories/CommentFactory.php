@@ -20,7 +20,7 @@ class CommentFactory extends Factory
     {
         return [
             //
-            'comment' => $this->faker->paragraphs(6, true),
+            'body' => $this->faker->paragraphs(6, true),
             'user_id' => User::factory(),
             'blog_id' => Blog::factory(),
         ];
