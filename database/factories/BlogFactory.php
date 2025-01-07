@@ -21,7 +21,7 @@ class BlogFactory extends Factory
             //
             'title' => $this->faker->sentence(),
             'body' => $this->faker->paragraph(15, true),
-            'author'=>$this->faker->name(),
+            'author'=>'$this->faker->name()',
             'categories'=>$this->faker->randomElement(BlogCategoryEnum::options()),
             'likes'=>$this->faker->randomDigit(),
             'photo'=>$this->faker->imageUrl(),

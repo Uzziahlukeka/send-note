@@ -29,7 +29,6 @@ new class extends Component {
                 'type' => 'warning',
                 'class'=>'alert-danger'
             ]);
-            // $this->js("alert('You have already liked this post.')");
             $this->showAlert = true;
             return;
         }
@@ -48,9 +47,9 @@ new class extends Component {
 <div class="mt-3">
     <div
         x-data="{ showAlert: @entangle('showAlert') }"
-        x-init="setTimeout(() => showAlert = false, 3000)"
+        x-init="() => { $watch('showAlert', value => { if (value) { setTimeout(() => showAlert = false, 3000); } }); }"
         x-show="showAlert"
-         class="fixed top-0 right-0 mt-4 mr-4 py-12 justify-end z-50">
+        class="fixed top-0 right-0 mt-4 mr-4 py-12 justify-end z-50">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div>
                 @if(session()->has('alert'))

@@ -19,6 +19,6 @@ class AdminMiddleware
         if(User::where('role','admin')->exists()){
             return $next($request);
         }
-        return redirect()->route('welcome');
+        return redirect()->route('blogs');
     }
 }
